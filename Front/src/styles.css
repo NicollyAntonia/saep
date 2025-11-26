@@ -1,0 +1,19 @@
+:root{
+  font-family: Arial, sans-serif;
+}
+body{
+  margin:0;
+  padding:20px;
+  background:#f4f6f8;
+  color:#222;
+}
+.centered{ display:flex; align-items:center; justify-content:center; height:80vh; }
+.card{ background:white; padding:16px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.08); margin-bottom:16px; }
+input, select { padding:8px; margin:6px 0; border:1px solid #ccc; border-radius:4px; width:100%; box-sizing:border-box;}
+button { padding:8px 12px; margin-right:8px; border:none; border-radius:6px; cursor:pointer; }
+button.danger{ background:#e74c3c; color:white; }
+.row{ display:flex; gap:8px; margin-top:8px; }
+.form-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:8px; }
+table.full{ width:100%; border-collapse:collapse; }
+table.full th, table.full td{ padding:8px; border:1px solid #ddd; text-align:left; }
+.erro{ color:#b00020; }
