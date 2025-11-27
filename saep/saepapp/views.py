@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import User
 
 import json
 def bubble_sort(ferramentas):
@@ -84,28 +85,29 @@ class FerramentaRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
     permission_classes = [AllowAny]
 
-
 class MovimentacaoCreateAPIView(CreateAPIView):
     queryset = Movimentacao.objects.all()
     serializer_class = MovimentacaoSerializer
     permission_classes = [AllowAny]
 
-
     def perform_create(self, serializer):
-        movimentacao = serializer.save(usuario=self.request.user)
+        
+
+        # Se não estiver autenticado, registra como admin (id=1)
+        user = self.request.user if self.request.user.is_authenticated else User.objects.get(pk=1)
+
+        movimentacao = serializer.save(usuario=user)
 
         ferramenta = movimentacao.ferramenta
 
         if movimentacao.tipo == "entrada":
             ferramenta.quantidade += movimentacao.quantidade
 
-        elif movimentacao.tipo == "saida":
+        else:  # saída
             ferramenta.quantidade -= movimentacao.quantidade
 
-            # 7.1.4. ALERTA DE ESTOQUE ABAIXO DO MÍNIMO
             if ferramenta.quantidade < ferramenta.estoque_minimo:
-                print("⚠ ALERTA: ESTOQUE ABAIXO DO MÍNIMO!") 
-                # Pode retornar no response, mandar email, notificação etc.
+                print("⚠ ALERTA: ESTOQUE ABAIXO DO MÍNIMO!")
 
         ferramenta.save()
 

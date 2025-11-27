@@ -24,6 +24,7 @@ class Movimentacao(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     descricao = models.TextField()
     data_alteracao = models.DateTimeField(auto_now=True)
+    quantidade = models.IntegerField()
 
     def __str__(self):
         return f"Movimentação de {self.usuario.username} em {self.data_alteracao.strftime('%d/%m/%Y %H:%M')}"

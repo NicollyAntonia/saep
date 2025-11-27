@@ -1,7 +1,5 @@
 create database saep_db ; 
-
-CREATE DATABASE IF NOT EXISTS estoque;
-USE estoque;
+USE saep_db;
 
 
 CREATE TABLE ferramentas (
