@@ -1,18 +1,29 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Produtos from "./pages/Ferramentas";
 import Estoque from "./pages/Estoque";
+import Navbar from "./components/Navbar";
+import Ferramentas from "./pages/Produtos";
+import EditarProduto from "./pages/EditarProduto";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/" replace />;
 }
 
-export default function App() {
+function AppContent() {
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+
+  // NÃO exibe navbar na página de login
+  const hideNavbar = location.pathname === "/" || !token;
+
   return (
-    <BrowserRouter>
+    <>
+      {!hideNavbar && <Navbar />}
+
       <Routes>
         <Route path="/" element={<Login />} />
 
@@ -42,7 +53,34 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
+      <Route
+          path="/produtos"
+          element={
+            <PrivateRoute>
+              <Ferramentas />
+            </PrivateRoute>
+          }
+        />
+
+        
+      <Route
+          path="/editarprodutos/:id"
+          element={
+            <PrivateRoute>
+              <EditarProduto />
+            </PrivateRoute>
+          }
+        />
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

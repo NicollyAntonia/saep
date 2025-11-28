@@ -7,27 +7,43 @@ export default function Home() {
 
   function logout() {
     localStorage.clear();
-    navigate("/home");   // corrigido!
+    navigate("/home");
   }
 
   return (
-    <div className="container">
-      <header className="card">
-        <h2>Bem-vindo, {nome}</h2>
-        <div className="actions">
-          <button onClick={() => navigate("/ferramentas")}>
+    <div className="flex items-center justify-center min-h-screen bg-purple-900">
+      <div className="bg-purple-800 text-white p-10 rounded-xl shadow-2xl w-96 text-center">
+        
+        <h2 className="text-3xl font-bold mb-6">
+          Bem-vindo, {nome}!
+        </h2>
+
+        <div className="flex flex-col gap-4">
+
+          <button
+            onClick={() => navigate("/ferramentas")}
+            className="bg-purple-600 hover:bg-purple-500 transition text-white py-3 rounded-lg"
+          >
             Cadastro de Produtos
           </button>
 
-          <button onClick={() => navigate("/estoque")}>
+          <button
+            onClick={() => navigate("/estoque")}
+            className="bg-purple-600 hover:bg-purple-500 transition text-white py-3 rounded-lg"
+          >
             Gestão de Estoque
           </button>
 
-          <button className="danger" onClick={logout}>
+          <button
+            onClick={logout}
+            className="bg-red-600 hover:bg-red-500 transition text-white py-3 rounded-lg"
+          >
             Sair
           </button>
+          
         </div>
-      </header>
+
+      </div>
     </div>
   );
 }

@@ -15,44 +15,55 @@ export default function Login() {
         "http://127.0.0.1:8000/login",
         {
           username: usuario,
-          password: senha
+          password: senha,
         },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
         }
       );
 
       console.log("Login OK:", response.data);
 
-      // 🔥 SALVA "token fake" para habilitar o PrivateRoute
       localStorage.setItem("token", "logado");
+      localStorage.setItem("usuario", usuario);
 
-      // 🔥 REDIRECIONA
       navigate("/home");
-
     } catch (error) {
       console.error("Erro:", error);
     }
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Usuário"
-        value={usuario}
-        onChange={(e) => setUsuario(e.target.value)}
-      />
+    <div className="flex items-center justify-center min-h-screen bg-purple-900">
+      <div className="bg-purple-800 p-10 rounded-xl shadow-xl w-96 text-center text-white">
 
-      <input
-        type="password"
-        placeholder="Senha"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-      />
+        <h2 className="text-3xl font-bold mb-6">Login</h2>
 
-      <button onClick={logar}>Entrar</button>
+        <input
+          type="text"
+          placeholder="Usuário"
+          value={usuario}
+          onChange={(e) => setUsuario(e.target.value)}
+          className="w-full p-3 mb-4 rounded-lg text-black focus:outline-none"
+        />
+
+        <input
+          type="password"
+          placeholder="Senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          className="w-full p-3 mb-4 rounded-lg text-black focus:outline-none"
+        />
+
+        <button
+          onClick={logar}
+          className="w-full bg-purple-600 hover:bg-purple-500 transition text-white py-3 rounded-lg"
+        >
+          Entrar
+        </button>
+
+      </div>
     </div>
   );
 }
